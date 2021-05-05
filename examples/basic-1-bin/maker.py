@@ -1,21 +1,17 @@
 import sys
 from unittest.mock import patch
 
-import pyhf
-import jax.numpy as jnp
 import jax
-
+import jax.numpy as jnp
+import pyhf
 
 jax_backend = pyhf.tensor.jax_backend(precision="64b")
 pyhf.set_backend(jax_backend)
 
+
 def model_maker():
-    @patch.object(
-        sys.modules["pyhf.tensor.common"], "default_backend", new=jax_backend
-    )
-    @patch.object(
-        sys.modules["pyhf.pdf"], "default_backend", new=jax_backend
-    )
+    @patch.object(sys.modules["pyhf.tensor.common"], "default_backend", new=jax_backend)
+    @patch.object(sys.modules["pyhf.pdf"], "default_backend", new=jax_backend)
     @patch("pyhf.default_backend", new=jax_backend)
     @patch.object(
         sys.modules["pyhf.interpolators.code0"], "default_backend", new=jax_backend
@@ -41,11 +37,9 @@ def model_maker():
     @patch.object(
         sys.modules["pyhf.modifiers.staterror"], "default_backend", new=jax_backend
     )
-    @patch.object(
-        sys.modules["pyhf.constraints"], "default_backend", new=jax_backend
-    )
+    @patch.object(sys.modules["pyhf.constraints"], "default_backend", new=jax_backend)
     def make_spec(yields):
-        s,b,bup,bdown = yields
+        s, b, bup, bdown = yields
 
         spec = {
             "channels": [
@@ -66,7 +60,10 @@ def model_maker():
                                 {
                                     "name": "nn_histosys",
                                     "type": "histosys",
-                                    "data": {"lo_data": bdown, "hi_data": bup,},
+                                    "data": {
+                                        "lo_data": bdown,
+                                        "hi_data": bup,
+                                    },
                                 }
                             ],
                         },
@@ -80,5 +77,5 @@ def model_maker():
         bonlypars = jnp.asarray([x for x in nompars])
         bonlypars = jax.ops.index_update(bonlypars, m.config.poi_index, 0.0)
         return m, bonlypars
+
     return make_spec
-    

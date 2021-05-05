@@ -1,20 +1,21 @@
-__all__ = ['expected_CLs']
+__all__ = ["expected_CLs"]
 
+
+from functools import partial
 
 import jax
 import jax.numpy as jnp
 import pyhf
-from functools import partial
 
 pyhf.set_backend("jax")
 # avoid those precision errors!
 jax.config.update("jax_enable_x64", True)
 
-from fit import global_fit, constrained_fit
+from fit import constrained_fit, global_fit
 from transforms import to_bounded_vec, to_inf_vec
 
 
-def expected_CLs(model_maker, solver_kwargs=dict(pdf_transform = True)):
+def expected_CLs(model_maker, solver_kwargs=dict(pdf_transform=True)):
     """
     Args:
         model_maker: Function that returns a Model object using the `yields` arg.
@@ -44,7 +45,7 @@ def expected_CLs(model_maker, solver_kwargs=dict(pdf_transform = True)):
         numerator = (
             to_bounded_vec(c_fitter(initval, [config, test_mu]), bounds)
             if transforms
-            else c_fitter(initval, [config,test_mu])
+            else c_fitter(initval, [config, test_mu])
         )
 
         # don't have to fit these -- we know them for expected limits!

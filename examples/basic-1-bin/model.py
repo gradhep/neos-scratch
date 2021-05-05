@@ -1,8 +1,10 @@
 import jax
 import pyhf
+
 pyhf.set_backend("jax")
 
-class _Config(object):
+
+class _Config:
     def __init__(self):
         self.poi_index = 0
         self.npars = 2
@@ -16,7 +18,7 @@ class _Config(object):
         )
 
 
-class Model(object):
+class Model:
     def __init__(self, spec):
         self.sig, self.nominal, self.uncert = spec
         self.factor = (self.nominal / self.uncert) ** 2
