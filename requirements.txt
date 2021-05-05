@@ -1,0 +1,6 @@
+matplotlib
+celluloid
+jaxlib==0.1.57
+jax==0.2.0
+jax-fixedpoint
+pyhf
