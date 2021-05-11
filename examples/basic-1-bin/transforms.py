@@ -27,7 +27,7 @@ def to_bounded(param, bounds):
 def to_inf_vec(param, bounds):
     bounds = jnp.asarray(bounds)
     a, b = bounds[:, 0], bounds[:, 1]
-    x = (2.0 * param - a) / (b - a) - 1.0
+    x = 2.0 * (param - a) / (b - a) - 1.0
     return jnp.arcsin(x)
 
 
@@ -35,5 +35,5 @@ def to_inf_vec(param, bounds):
 def to_inf(param, bounds):
     a, b = bounds
     # print(f"a,b: {a,b}")
-    x = (2.0 * param - a) / (b - a) - 1.0
+    x = 2.0 * (param - a) / (b - a) - 1.0
     return jnp.arcsin(x)
