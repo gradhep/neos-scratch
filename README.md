@@ -1,6 +1,9 @@
 # neos-scratch
 various studies and demos relating to neos -- see gradhep/neos for the full repo
 
+
+### note -- this is a python 3.7/3.8 compatible project only!
+
 ## dev
 
 to keep formatting nice, initialize pre-commit (after possible `python -m pip install pre-commit`):

@@ -1,9 +1,12 @@
 import jax.numpy as jnp
+from model import simplemodel2
 from relax import hist_kde
 
 
-def yield_maker(data_gen, bandwidth=None, SCALE=1, syst=True):
-    def yields_from_data(angle, anchr=jnp.array([0.0, 0.0])):
+def yield_maker(
+    data_gen, bandwidth=None, bins=jnp.linspace(-100, 100, 3), SCALE=1, syst=True
+):
+    def model(angle, anchr=jnp.array([0.0, 0.0])):
 
         s1, b1, b2, b3 = data_gen()
 
@@ -26,6 +29,7 @@ def yield_maker(data_gen, bandwidth=None, SCALE=1, syst=True):
         if not syst:
             nb1, nb2, nb3 = nb2, nb2, nb2
 
-        return ns1, nb1, nb2, nb3
+        m, bonlypars = simplemodel2(ns1, nb1, nb2, nb3)
+        return m, bonlypars
 
-    return yields_from_data
+    return model

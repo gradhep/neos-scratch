@@ -1,14 +1,14 @@
 import sys
 from unittest.mock import patch
 
+import jax
+import jax.numpy as jnp
 import pyhf
 
 jax_backend = pyhf.tensor.jax_backend(precision="64b")
 pyhf.set_backend(jax_backend)
 
 
-@patch.object(sys.modules["pyhf.tensor.common"], "default_backend", new=jax_backend)
-@patch.object(sys.modules["pyhf.pdf"], "default_backend", new=jax_backend)
 @patch("pyhf.default_backend", new=jax_backend)
 @patch.object(
     sys.modules["pyhf.interpolators.code0"], "default_backend", new=jax_backend
@@ -34,7 +34,6 @@ pyhf.set_backend(jax_backend)
 @patch.object(
     sys.modules["pyhf.modifiers.staterror"], "default_backend", new=jax_backend
 )
-@patch.object(sys.modules["pyhf.constraints"], "default_backend", new=jax_backend)
 def simplemodel2(s, b_up, b_nom, b_dn):
     spec = {
         "channels": [
@@ -63,4 +62,9 @@ def simplemodel2(s, b_up, b_nom, b_dn):
             }
         ]
     }
-    return pyhf.Model(spec)
+
+    m = pyhf.Model(spec)
+    nompars = m.config.suggested_init()
+    bonlypars = jnp.asarray([x for x in nompars])
+    bonlypars = jax.ops.index_update(bonlypars, m.config.poi_index, 0.0)
+    return m, bonlypars
