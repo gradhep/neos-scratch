@@ -1,7 +1,4 @@
 celluloid
 git+https://github.com/scikit-hep/pyhf.git@diffable_json
-jax==0.1.71
-jax-fixedpoint==0.0.4
-jaxlib==0.1.49
 matplotlib
-relaxed==0.0.1
+relaxed==0.0.2
