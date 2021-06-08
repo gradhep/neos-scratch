@@ -1,17 +1,19 @@
 import jax.numpy as jnp
 from model import simplemodel2
-from relax import hist_kde
+from relaxed import hist_kde
 
 
 def yield_maker(
     data_gen,
     bandwidth=None,
-    bins=jnp.array([-jnp.inf, *jnp.linspace(-100, 100, 3), jnp.inf]),
+    bins=[-5, 0, 5],
     SCALE=1,
     syst=True,
     reflect_infinities=True,
 ):
-    def model(angle, anchr=jnp.array([0.0, 0.0])):
+    def model(params):
+        angle, anchor = params
+        anchr = jnp.array([anchor, 0.0])
 
         s1, b1, b2, b3 = data_gen()
 
