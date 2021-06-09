@@ -11,11 +11,11 @@ def yield_maker(
     syst=True,
     reflect_infinities=True,
 ):
-    def model(params):
+    def model(params, key):
         angle, anchor = params
         anchr = jnp.array([anchor, 0.0])
 
-        s1, b1, b2, b3 = data_gen()
+        s1, b1, b2, b3 = data_gen(key)
 
         # direc = jnp.array([jnp.cos(angle),jnp.sin(angle)])
         normal = jnp.array([jnp.cos(angle + jnp.pi / 2), jnp.sin(angle + jnp.pi / 2)])
