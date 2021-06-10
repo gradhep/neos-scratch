@@ -11,7 +11,7 @@ def yield_maker(
     syst=True,
     reflect_infinities=True,
 ):
-    def model(params, key):
+    def yields(params, key):
         angle, anchor = params
         anchr = jnp.array([anchor, 0.0])
 
@@ -53,8 +53,15 @@ def yield_maker(
 
         if not syst:
             nb1, nb2, nb3 = nb2, nb2, nb2
+        return ns1, nb1, nb2, nb3
 
+    return yields
+
+
+def get_model(yields):
+    def build_model(params, key):
+        ns1, nb1, nb2, nb3 = yields(params, key)
         m, bonlypars = simplemodel2(ns1, nb1, nb2, nb3)
         return m, bonlypars
 
-    return model
+    return build_model
