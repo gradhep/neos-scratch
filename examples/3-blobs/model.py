@@ -1,3 +1,9 @@
+"""
+Here you will find the model definition -- a simple 1-channel model that defines:
+- a signal contribution s with normalisation factor mu (param of interest)
+- a nominal background contribution that has two variations, 'bup' and 'bdown'
+    - these are interpolated between to define a nuisance parameter 'uncorr_bkguncrt'
+"""
 import sys
 from unittest.mock import patch
 
