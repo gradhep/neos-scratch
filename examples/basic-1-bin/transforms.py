@@ -9,6 +9,7 @@ import jax.numpy as jnp
 # avoid those precision errors!
 jax.config.update("jax_enable_x64", True)
 
+
 # Cell
 # [-inf, inf] -> [a,b] (vectors)
 def to_bounded_vec(param, bounds):

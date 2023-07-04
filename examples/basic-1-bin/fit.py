@@ -43,7 +43,6 @@ def global_fit(
         exp_bonly_data = m.expected_data(bonlypars, include_auxdata=True)
 
         def expected_logpdf(pars):  # maps pars to bounded space if pdf_transform = True
-
             return (
                 m.logpdf(to_bounded_vec(pars, bounds), exp_bonly_data)
                 if pdf_transform
@@ -106,7 +105,6 @@ def constrained_fit(
     adam_init, adam_update, adam_get_params = optimizers.adam(learning_rate)
 
     def make_model(hyper_pars):
-
         model_pars, constrained_mu = hyper_pars
         m, bonlypars = model_constructor(model_pars)
 
@@ -118,7 +116,6 @@ def constrained_fit(
         exp_bonly_data = m.expected_data(bonlypars, include_auxdata=True)
 
         def expected_logpdf(pars):  # maps pars to bounded space if pdf_transform = True
-
             return (
                 m.logpdf(to_bounded_vec(pars, bounds), exp_bonly_data)
                 if pdf_transform
